@@ -1,19 +1,11 @@
-function Get-Beer
-{
-
+function Get-Beer{
   
   [xml]$products = Invoke-RestMethod -Uri https://www.systembolaget.se/api/assortment/products/xml
-  
   $Bira= $products.artiklar.artikel |  where {$_.Varugrupp -match "ÖL" }
-  
-  
-  
   $beer = @{}
   $result = @()
   
-  foreach ($t in $Bira)
-  {
-    
+  foreach ($t in $Bira){
     [datetime]$datum  = $t.Saljstart
     [Int]$pris             = $t.Prisinklmoms
     $namn             = $t.namn
@@ -25,8 +17,7 @@ function Get-Beer
     $ArtikelID        = $t.Artikelid
     $typ              = $t.Typ
     $Förpackning      = $t.Forpackning
-    
-    
+   
     $beer = @{
       Namn        = $namn 
       Pris        = $pris
@@ -38,16 +29,12 @@ function Get-Beer
       ArtikelID   = $ArtikelID
       SäljStart   = $datum
       Förpackning = $Förpackning
-      
     }
     
     $result += (New-Object PSObject -Property $beer)
   }
-  
-  
+
   $result | select namn, pris, alkoholhalt, leveratör, typ, land, nr, artikelid, förpackning, SäljStart #| where {$_.säljstart -gt (Get-Date).AddDays(-31) }
 }
-
-
 
 Get-Beer | sort AlkoholHalt
