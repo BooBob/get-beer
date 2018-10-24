@@ -7,7 +7,7 @@ function Get-Beer{
   
   foreach ($t in $Bira){
     [datetime]$datum  = $t.Saljstart
-    [Int]$pris             = $t.Prisinklmoms
+    [Int]$pris        = $t.Prisinklmoms
     $namn             = $t.namn
     $leverantor       = $t.Leverantor
     $Ursprunglandnamn = $t.Ursprunglandnamn
