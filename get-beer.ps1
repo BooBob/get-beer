@@ -17,6 +17,7 @@ function Get-Beer{
     $ArtikelID        = $t.Artikelid
     $typ              = $t.Typ
     $Förpackning      = $t.Forpackning
+    $Volymiml         = $t.Volymiml
    
     $beer = @{
       Namn        = $namn 
@@ -29,12 +30,13 @@ function Get-Beer{
       ArtikelID   = $ArtikelID
       SäljStart   = $datum
       Förpackning = $Förpackning
+      Volymiml    = $Volymiml
     }
     
     $result += (New-Object PSObject -Property $beer)
   }
 
-  $result | select namn, pris, alkoholhalt, leveratör, typ, land, nr, artikelid, förpackning, SäljStart #| where {$_.säljstart -gt (Get-Date).AddDays(-31) }
+  $result | select namn, pris, alkoholhalt, leveratör, typ, land, nr, artikelid, förpackning, SäljStart, Volymiml #| where {$_.säljstart -gt (Get-Date).AddDays(-31) }
 }
 
-Get-Beer | sort AlkoholHalt
+#Get-Beer | sort AlkoholHalt
